@@ -303,10 +303,21 @@ tips        <- readRDS("./tips_df")
 tips$date <- ymd(tips$date)
 write.csv(tips,"tips.csv",row.names = FALSE)
 
-
+#####################################################################################
 cat("working on userss dataset \n")
 users       <- readRDS("./users_df")
-sapply(users$compliments,class)
+
+for (i in 1:nrow(users)){
+  users$FriendsNumber[i] <-   length(unlist(users$friends[i]))
+}
+
+
+!!
+  for (i in 1:nrow(users)){
+    users$EliteYearsNumber [i] <-   length(unlist(users$elite[i]))
+  }
+
+
 
 friends <- data.frame()
 tail(friends)
@@ -317,6 +328,18 @@ for (i in 1:nrow(users)) {
                                                  unlist(users$friends[i]))))
   }
 }
+
+write.csv(friends,"friends.csv",row.names = FALSE)
+
+users$friends <- NULL
+users$elite <- NULL
+
+users$votes <- NULL
+users$compliments <- NULL
+
+write.csv(users,"users.csv",row.names = FALSE)
+
+sapply(users,class)
 
 
 ###############End of Datasets Cleanup ###############################################
