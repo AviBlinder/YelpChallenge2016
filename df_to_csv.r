@@ -2,6 +2,7 @@ rm(list=ls())
 #######################################################################
 cat("working on business dataset \n")
 business <- readRDS("./business_df")
+#Test for GITHUB
 
 business$Monday_Open <- factor(business$hours$Monday$open)
 business$Tuesday_Open <- factor(business$hours$Tuesday$open)
