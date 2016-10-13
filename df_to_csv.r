@@ -256,7 +256,7 @@ write.csv(tips,paste0(url_out,"tips.csv"),row.names = FALSE)
 
 #####################################################################################
 cat("working on users dataset \n")
-users       <- readRDS(paste0(url,"users_df"))
+users <- readRDS(paste0(url,"users_df"))
 
 for (i in 1:nrow(users)){
   users$FriendsNumber[i] <-   length(unlist(users$friends[i]))
@@ -265,20 +265,29 @@ for (i in 1:nrow(users)){
 
 for (i in 1:nrow(users)){
     users$EliteYearsNumber [i] <-   length(unlist(users$elite[i]))
-  }
+}
 
 
 
 friends <- data.frame()
 nrow(users)
+library(foreach)
+#library(doParallel)
+#number_of_processors <- detectCores()
+#number_of_processors
 
-for (i in 1:nrow(users)) {
+#cl<-makeCluster(number_of_processors)
+#registerDoParallel(cl)
+
+strt<-Sys.time()
+foreach (i = 1:nrow(users)) %dopar% {
   cat(i,"")
   if (!is.na(users$friends[[i]][1])    ) {
     friends <- rbind(friends,as.data.frame(cbind(users$user_id[i],
                unlist(users$friends[i]))))
   }
 }
+print(Sys.time()-strt)
 
 
 write.csv(friends,paste0(url_out,"friends.csv"),row.names = FALSE)
