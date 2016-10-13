@@ -1,7 +1,9 @@
 rm(list=ls())
+url <- "D:/Yelp/r_datasets/"
+url_out <- "D:/Yelp/r_datasets/"
 #######################################################################
 cat("working on business dataset \n")
-business <- readRDS("./business_df")
+business <- readRDS(paste0(url,"business_df"))
 #Test for GITHUB
 
 business$Monday_Open <- factor(business$hours$Monday$open)
@@ -191,12 +193,12 @@ table(business$country)
 #file_name <- "business.xlsx"
 #if (file.exists(file_name))    file.remove(file_name)
 #write.xlsx(business,"Yelp.xlsx",sheetName = "Business",append=FALSE ,row.names = FALSE)
-write.csv(business,"business.csv",row.names = FALSE)
+write.csv(business,paste0(url_out,"business.csv"),row.names = FALSE)
 
 
 ########################
 cat("handling checkings dataset \n")
-checkins    <- readRDS("./checkins_df")
+checkins    <- readRDS(paste0(url,"checkins_df"))
 
 sapply(business,class)
 for (i in names(checkins$checkin_info) ) {
@@ -206,11 +208,11 @@ for (i in names(checkins$checkin_info) ) {
   checkins[,i_pretty][is.na(checkins[,i_pretty])] <- 0
 } 
 checkins$checkin_info <- NULL
-write.csv(checkins,"checkings.csv",row.names = FALSE)
+write.csv(checkins,paste0(url_out,"checkings.csv"),row.names = FALSE)
 
 ####
 cat("handling reviews datasets \n")
-reviews     <- readRDS("./reviews_df")
+reviews     <- readRDS(paste0(url,"reviews_df"))
 for (i in names(reviews$votes) ) {
   cat("handling " , i , "class = ", class(reviews$votes[,i]) , "\n" )
   i_new <- paste0("votes_",i)
@@ -294,33 +296,31 @@ props(reviews_Pittsburgh,"business_stars")
 props(reviews_Urbana_Champaign,"business_stars")
 props(reviews_Waterloo,"business_stars")
 
-write.csv(reviews,"reviews.csv",row.names = FALSE)
+write.csv(reviews,paste0(url_out,"reviews.csv"),row.names = FALSE)
 
 
 #####################################################################################
 cat("working on tips dataset \n")
-tips        <- readRDS("./tips_df")
+tips        <- readRDS(paste0(url,"tips_df"))
 tips$date <- ymd(tips$date)
-write.csv(tips,"tips.csv",row.names = FALSE)
+write.csv(tips,paste0(url_out,"tips.csv"),row.names = FALSE)
 
 #####################################################################################
-cat("working on userss dataset \n")
-users       <- readRDS("./users_df")
+cat("working on users dataset \n")
+users       <- readRDS(paste0(url,"users_df"))
 
 for (i in 1:nrow(users)){
   users$FriendsNumber[i] <-   length(unlist(users$friends[i]))
 }
 
 
-!!
-  for (i in 1:nrow(users)){
+for (i in 1:nrow(users)){
     users$EliteYearsNumber [i] <-   length(unlist(users$elite[i]))
   }
 
 
 
 friends <- data.frame()
-tail(friends)
 
 for (i in 1:nrow(users)) {
   if (!is.na(users$friends[[i]][1])    ) {
@@ -329,15 +329,15 @@ for (i in 1:nrow(users)) {
   }
 }
 
-write.csv(friends,"friends.csv",row.names = FALSE)
+write.csv(friends,paste0(url_out,"friends.csv"),row.names = FALSE)
 
 users$friends <- NULL
 users$elite <- NULL
-
+!!!!!!!
 users$votes <- NULL
 users$compliments <- NULL
 
-write.csv(users,"users.csv",row.names = FALSE)
+write.csv(users,paste0(url_out,"users.csv"),row.names = FALSE)
 
 sapply(users,class)
 
