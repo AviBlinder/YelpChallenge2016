@@ -189,14 +189,10 @@ business$country <- as.factor(business$country)
 business$state <- as.factor(business$state)
 table(business$country)
 
-#library(xlsx)
-#file_name <- "business.xlsx"
-#if (file.exists(file_name))    file.remove(file_name)
-#write.xlsx(business,"Yelp.xlsx",sheetName = "Business",append=FALSE ,row.names = FALSE)
 write.csv(business,paste0(url_out,"business.csv"),row.names = FALSE)
 
 
-########################
+#####################################################################################
 cat("handling checkings dataset \n")
 checkins    <- readRDS(paste0(url,"checkins_df"))
 
@@ -244,57 +240,10 @@ props <- function(city,feature){
 }
 
 
-business_Charlotte <- subset(business,business$Maincity == "Charlotte")
-business_Edinburgh <- subset(business,business$Maincity == "Edinburgh")
-business_Karlsruhe <- subset(business,business$Maincity == "Karlsruhe")
-business_LasVegas <- subset(business,business$Maincity == "Las Vegas")
-business_Madison <- subset(business,business$Maincity == "Madison")
-business_Montreal <- subset(business,business$Maincity == "Montreal")
-business_Phoenix <- subset(business,business$Maincity == "Phoenix")
-business_Pittsburgh <- subset(business,business$Maincity == "Pittsburgh")
-business_Urbana_Champaign <- subset(business,business$Maincity == "Urbana-Champaign")
-business_Waterloo <- subset(business,business$Maincity == "Waterloo")
-
-props(business_Charlotte,"stars")
-props(business_Edinburgh,"stars")
-props(business_Karlsruhe,"stars")
-props(business_LasVegas,"stars")
-props(business_Madison,"stars")
-props(business_Montreal,"stars")
-props(business_Phoenix,"stars")
-props(business_Pittsburgh,"stars")
-props(business_Urbana_Champaign,"stars")
-props(business_Waterloo,"stars")
-
 short_business <- business[,c("business_id","Maincity","stars")]
 names(short_business) <- c("business_id","Maincity","business_stars")
 reviews <- merge(reviews,short_business,all.x = T,by="business_id")
 
-reviews_Charlotte <- subset(reviews,reviews$Maincity == "Charlotte")
-reviews_Edinburgh <- subset(reviews,reviews$Maincity == "Edinburgh")
-reviews_Karlsruhe <- subset(reviews,reviews$Maincity == "Karlsruhe")
-reviews_LasVegas <- subset(reviews,reviews$Maincity == "Las Vegas")
-reviews_Madison <- subset(reviews,reviews$Maincity == "Madison")
-reviews_Montreal <- subset(reviews,reviews$Maincity == "Montreal")
-reviews_Phoenix <- subset(reviews,reviews$Maincity == "Phoenix")
-reviews_Pittsburgh <- subset(reviews,reviews$Maincity == "Pittsburgh")
-reviews_Urbana_Champaign <- subset(reviews,reviews$Maincity == "Urbana-Champaign")
-reviews_Waterloo <- subset(reviews,reviews$Maincity == "Waterloo")
-
-props(reviews_Charlotte[year(reviews_Charlotte$date)==2015,],"business_stars")
-props(reviews_Charlotte[year(reviews_Charlotte$date)==2014,],"business_stars")
-props(reviews_Charlotte[year(reviews_Charlotte$date)==2013,],"business_stars")
-props(reviews_Charlotte[year(reviews_Charlotte$date)==2012,],"business_stars")
-props(reviews_Charlotte[year(reviews_Charlotte$date)==2011,],"business_stars")
-props(reviews_Edinburgh,"business_stars")
-props(reviews_Karlsruhe,"business_stars")
-props(reviews_LasVegas,"business_stars")
-props(reviews_Madison,"business_stars")
-props(reviews_Montreal,"business_stars")
-props(reviews_Phoenix,"business_stars")
-props(reviews_Pittsburgh,"business_stars")
-props(reviews_Urbana_Champaign,"business_stars")
-props(reviews_Waterloo,"business_stars")
 
 write.csv(reviews,paste0(url_out,"reviews.csv"),row.names = FALSE)
 
@@ -321,13 +270,16 @@ for (i in 1:nrow(users)){
 
 
 friends <- data.frame()
+nrow(users)
 
 for (i in 1:nrow(users)) {
+  cat(i,"")
   if (!is.na(users$friends[[i]][1])    ) {
     friends <- rbind(friends,as.data.frame(cbind(users$user_id[i],
-                                                 unlist(users$friends[i]))))
+               unlist(users$friends[i]))))
   }
 }
+
 
 write.csv(friends,paste0(url_out,"friends.csv"),row.names = FALSE)
 
