@@ -20,7 +20,7 @@ props(business_Pittsburgh,"stars")
 props(business_Urbana_Champaign,"stars")
 props(business_Waterloo,"stars")
 
-reviews_Charlotte <- subset(reviews,reviews$Maincity == "Charlotte")
+reviews_Charlotte <- subset(reviews,reviews$Maincity == "Charlotte")0
 reviews_Edinburgh <- subset(reviews,reviews$Maincity == "Edinburgh")
 reviews_Karlsruhe <- subset(reviews,reviews$Maincity == "Karlsruhe")
 reviews_LasVegas <- subset(reviews,reviews$Maincity == "Las Vegas")
