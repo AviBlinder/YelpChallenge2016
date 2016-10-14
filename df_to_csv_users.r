@@ -9,11 +9,11 @@ url_out <- "./r_datasets/"
 #################
 url <- "https://s3-eu-west-1.amazonaws.com/yelpchallenge2016/datasets/"
 user_file     <- paste0(url,"yelp_academic_dataset_user.json")
-#install.packages("jsonlite")
+install.packages("jsonlite")
 
 library(jsonlite)
 users_df <- stream_in(file(user_file))
-saveRDS(users,"users_df")
+saveRDS(users_df,"users_df")
 users <- readRDS("users_df")
 #################
 strt<-Sys.time()
