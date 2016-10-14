@@ -1,10 +1,21 @@
 cat("working on users dataset \n")
 rm(list=ls())
-url     <- "D:/Yelp/r_datasets/"
-url_out <- "D:/Yelp/r_datasets/"
+url     <- "https://s3-eu-west-1.amazonaws.com/yelpchallenge2016/r_datasets/"
+#url_out <- "D:/Yelp/r_datasets/"
+url_out <- "./r_datasets/"
 
-users <- readRDS(paste0(url,"users_df"))
+#users <- readRDS(paste0(url,"users_df"))
+#users <- readRDS("https://s3-eu-west-1.amazonaws.com/yelpchallenge2016/r_datasets/users_df")
+#################
+url <- "https://s3-eu-west-1.amazonaws.com/yelpchallenge2016/datasets/"
+user_file     <- paste0(url,"yelp_academic_dataset_user.json")
+#install.packages("jsonlite")
 
+library(jsonlite)
+users_df <- stream_in(file(user_file))
+saveRDS(users,"users_df")
+users <- readRDS("users_df")
+#################
 strt<-Sys.time()
 for (i in 1:nrow(users)){
   users$FriendsNumber[i] <-   length(unlist(users$friends[i]))
