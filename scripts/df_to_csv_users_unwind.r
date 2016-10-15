@@ -15,7 +15,7 @@ friends1 <- data.frame()
 for (i in 1:100000) {
   cat(i,"")
   if ( length(users$friends[[i]]) > 0){
-      friends1 <- rbind(friends1,unwind(users,i))  
+    friends1 <- rbind(friends1,unwind(users,i))  
   }
 }
 print(Sys.time()-strt)
