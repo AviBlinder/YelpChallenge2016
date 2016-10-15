@@ -82,7 +82,7 @@ friends7 <- data.frame()
 for (i in 600001:nrow(users)) {
   cat(i,"")
   if ( length(users$friends[[i]]) > 0){
-    friends6 <- rbind(friends6,unwind(users,i))  
+    friends7 <- rbind(friends7,unwind(users,i))  
   }
 }
 print(Sys.time()-strt)
