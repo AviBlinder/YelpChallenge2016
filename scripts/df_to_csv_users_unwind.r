@@ -79,7 +79,22 @@ for (i in 500001:600000) {
 print(Sys.time()-strt)
 write.csv(friends6,"./data/friends6.csv",row.names = FALSE)
 ##Time difference of 3.862903 hours
-#########
+
+strt<-Sys.time()
+friends7 <- data.frame()
+for (i in 600001:nrow(users)) {
+  cat(i,"")
+  friends7 <- rbind(friends7,unwind(users,"user_id","friends",i))  
+}
+print(Sys.time()-strt)
+write.csv(friends7,"./data/friends7.csv",row.names = FALSE)
+
+strt<-Sys.time()
+friends <- rbind(friends1,friends2,friends3,friends4,friends5,friends6,friends7)
+write.csv(friends,"./data/friends.csv",row.names = FALSE)
+strt<-Sys.time()
+
+###################################################################################
 ##parallel running - part 6
 
 strt<-Sys.time()
@@ -91,18 +106,6 @@ print(Sys.time()-strt)
 write.csv(friends6,"./data/friends6_parallel.csv",row.names = FALSE)
 
 #########
-strt<-Sys.time()
-friends7 <- data.frame()
-results <- foreach (i = 600001:nrow(users),.combine=rbind_fn) %dopar% {
-    friends7 <- rbind(friends7,unwind(users,"user_id","friends",i))  
-}
-print(Sys.time()-strt)
-write.csv(friends7,"./data/friends7.csv",row.names = FALSE)
-
-strt<-Sys.time()
-friends <- rbind(friends1,friends2,friends3,friends4,friends5,friends6,friends7)
-write.csv(friends,"./data/friends.csv",row.names = FALSE)
-strt<-Sys.time()
-
+   
 
 registerDoSEQ()
